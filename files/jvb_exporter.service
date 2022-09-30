@@ -1,0 +1,19 @@
+[Unit]
+Description=Jitsi Videobridge Prometheus Exporter
+
+[Service]
+User=nobody
+Group=nogroup
+Environment="DENO_DIR=/opt/jvb_exporter"
+WorkingDirectory=/opt/jvb_exporter
+Restart=on-failure
+RestartSec=10s
+ExecStart=/usr/local/bin/deno run \
+  --no-prompt \
+  --allow-net \
+  --allow-read=conf \
+  index.ts \
+  --config conf/config.yaml
+
+[Install]
+WantedBy=multi-user.target
